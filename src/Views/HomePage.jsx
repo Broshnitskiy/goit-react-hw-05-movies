@@ -31,9 +31,9 @@ export const HomePage = () => {
       <h1>Trending today</h1>
       <ul>
         {items.map(item => (
-          <Link to="/" key={item.id}>
-            <li>{item.title}</li>
-          </Link>
+          <li key={item.id}>
+            <Link to={`/movies/${item.id}`}>{item.title} </Link>
+          </li>
         ))}
       </ul>
     </main>

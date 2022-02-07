@@ -7,3 +7,11 @@ export async function getPopularFilms() {
 
   return response.data;
 }
+
+export async function getFilmById(movie_id) {
+  const response = await axios.get(
+    `/3/movie/${movie_id}?api_key=${API_KEY}&language=en-US`
+  );
+
+  return response.data;
+}
