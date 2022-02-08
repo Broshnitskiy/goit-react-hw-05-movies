@@ -15,3 +15,11 @@ export async function getFilmById(movie_id) {
 
   return response.data;
 }
+
+export async function getFilmBySearchName(value) {
+  const response = await axios.get(
+    `/3/search/movie?api_key=${API_KEY}&language=en-US&include_adult=false&query=${value}`
+  );
+
+  return response.data;
+}
