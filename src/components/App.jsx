@@ -1,12 +1,14 @@
 import { GlobalStyles } from './GlobalStyles';
 import { ToastContainer } from 'react-toastify';
+import { createChunk } from '../helpers/createChunk';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { MainNavApp } from './MainNavApp/MainNavApp';
-import { HomePage } from '../Views/HomePage';
-import { MoviesPage } from '../Views/MoviePage';
-import { MovieDetailsPage } from '../Views/MovieDetailsPage';
 import { Reviews } from './Reviews/Reviews';
 import { Cast } from './Cast/Cast';
+
+const HomePage = createChunk('HomePage');
+const MoviesPage = createChunk('MoviesPage');
+const MovieDetailsPage = createChunk('MovieDetailsPage');
 
 export const App = () => {
   return (

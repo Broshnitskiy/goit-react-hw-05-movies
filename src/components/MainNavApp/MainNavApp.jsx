@@ -1,4 +1,5 @@
 import { Outlet, NavLink } from 'react-router-dom';
+import { Suspense } from 'react';
 
 export const MainNavApp = () => {
   return (
@@ -13,7 +14,9 @@ export const MainNavApp = () => {
           </li>
         </ul>
       </nav>
-      <Outlet />
+      <Suspense fallback="">
+        <Outlet />
+      </Suspense>
     </header>
   );
 };
