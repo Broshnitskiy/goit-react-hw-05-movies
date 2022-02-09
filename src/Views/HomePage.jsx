@@ -1,8 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
 import { Loader } from 'components/Loader/Loader';
 import { getPopularFilms } from '../helpers/fetch-beckend';
+import { FilmsList } from '../components/FilmsList/FilmsList';
 
 export const HomePage = () => {
   const [items, setItems] = useState([]);
@@ -31,17 +31,7 @@ export const HomePage = () => {
       {error && <p>Whoops, something went wrong: {error.message}</p>}
       {loading && <Loader />}
       <h1>Trending today</h1>
-      {items.length > 0 && (
-        <ul>
-          {items.map(item => (
-            <li key={item.id}>
-              <Link to={`/movies/${item.id}`} state={{ from: location }}>
-                {item.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      {items.length > 0 && <FilmsList items={items} location={location} />}
     </main>
   );
 };

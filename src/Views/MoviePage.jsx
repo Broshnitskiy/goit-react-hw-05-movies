@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, Link, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from 'components/Loader/Loader';
 import { getFilmBySearchName } from '../helpers/fetch-beckend';
+import { FilmsList } from '../components/FilmsList/FilmsList';
 
 export const MoviesPage = () => {
   const [items, setItems] = useState([]);
@@ -55,24 +56,14 @@ export const MoviesPage = () => {
   };
 
   return (
-    <>
+    <main>
       {error && <p>Whoops, something went wrong: {error.message}</p>}
       {loading && <Loader />}
       <form onSubmit={handleSubmit} autoComplete="off">
         <input type="text" name="query" placeholder="Enter name" />
         <button>Search</button>
       </form>
-      {items.length > 0 && (
-        <ul>
-          {items.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`/movies/${id}`} state={{ from: location }}>
-                {title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
+      {items.length > 0 && <FilmsList items={items} location={location} />}
+    </main>
   );
 };
