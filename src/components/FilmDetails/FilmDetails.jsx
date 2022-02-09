@@ -1,4 +1,5 @@
 import baseImg from '../../images/no-poster1.png';
+import PropTypes from 'prop-types';
 
 export const FilmDetails = ({ filmData }) => {
   const { poster_path, vote_average, title, overview, genres, release_date } =
@@ -36,4 +37,8 @@ export const FilmDetails = ({ filmData }) => {
       </div>
     </>
   );
+};
+
+FilmDetails.propTypes = {
+  filmData: PropTypes.object.isRequired,
 };

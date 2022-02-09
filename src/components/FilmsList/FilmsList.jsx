@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export const FilmsList = ({ items, location }) => {
   return (
@@ -12,4 +13,14 @@ export const FilmsList = ({ items, location }) => {
       ))}
     </ul>
   );
+};
+
+FilmsList.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string,
+    })
+  ),
+  location: PropTypes.object,
 };
