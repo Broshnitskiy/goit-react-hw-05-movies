@@ -1,7 +1,15 @@
-import { useParams, Link, NavLink, useLocation } from 'react-router-dom';
+import {
+  useParams,
+  Link,
+  NavLink,
+  useLocation,
+  Outlet,
+} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
 import { getFilmById } from '../helpers/fetch-beckend';
+import baseImg from '../images/no-poster1.png';
+import { IoArrowUndoOutline } from 'react-icons/io5';
 
 export const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -17,7 +25,6 @@ export const MovieDetailsPage = () => {
       try {
         const data = await getFilmById(movieId);
         setFilmItem(data);
-        console.log(data);
       } catch (error) {
         setError(error);
       } finally {
@@ -34,21 +41,26 @@ export const MovieDetailsPage = () => {
     <>
       {error && <p>Whoops, something went wrong: {error.message}</p>}
       {loading && <Loader />}
-      <Link to={location?.state?.from ?? '/'}>Go back</Link>
+      <Link to={location?.state?.from ?? '/'}>
+        <IoArrowUndoOutline /> Go back
+      </Link>
 
       <>
-        {poster_path && (
-          <div>
+        <div>
+          {poster_path ? (
             <img
               width={250}
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
               alt="poster"
             />
-          </div>
-        )}
+          ) : (
+            <img width={250} src={`${baseImg}`} alt="no_image" />
+          )}
+        </div>
+
         <div>
           <h1>
-            {title} ({release_date})
+            {title} {release_date && <span>({release_date.slice(0, 4)})</span>}
           </h1>
           <p>User score: {Math.round((vote_average * 100) / 10)}%</p>
           <h2>Overview</h2>
@@ -71,10 +83,11 @@ export const MovieDetailsPage = () => {
             <NavLink to={'cast'}>Cast</NavLink>
           </li>
           <li>
-            <NavLink to={'revievs'}>Reviews</NavLink>
+            <NavLink to={'reviews'}>Reviews</NavLink>
           </li>
         </ul>
       </div>
+      <Outlet />
     </>
   );
 };

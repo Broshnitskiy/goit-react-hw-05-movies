@@ -23,3 +23,19 @@ export async function getFilmBySearchName(value) {
 
   return response.data;
 }
+
+export async function getFilmReviews(movie_id) {
+  const response = await axios.get(
+    `/3/movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+  );
+
+  return response.data;
+}
+
+export async function getFilmCast(movie_id) {
+  const response = await axios.get(
+    `/3/movie/${movie_id}/credits?api_key=${API_KEY}&language=en-US`
+  );
+
+  return response.data;
+}

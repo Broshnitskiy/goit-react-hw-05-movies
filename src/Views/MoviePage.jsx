@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from 'components/Loader/Loader';
 import { getFilmBySearchName } from '../helpers/fetch-beckend';
 
@@ -19,6 +21,12 @@ export const MoviesPage = () => {
         setLoading(true);
         try {
           const data = await getFilmBySearchName(query);
+          if (data.results.length === 0) {
+            toast.error(
+              'Search result not successful. Enter the correct movie name'
+            );
+            return;
+          }
 
           setItems(data.results);
         } catch (error) {
@@ -33,9 +41,17 @@ export const MoviesPage = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setSearchParams({ query: e.currentTarget.elements.query.value });
+    const form = e.currentTarget;
+    if (form.elements.query.value.trim() === '') {
+      //Щоб не вводити пробіли в інпуті
+      return;
+    }
 
-    e.currentTarget.reset();
+    setSearchParams({ query: form.elements.query.value });
+
+    setTimeout(() => {
+      form.reset();
+    }, 1500);
   };
 
   return (
@@ -48,10 +64,10 @@ export const MoviesPage = () => {
       </form>
       {items.length > 0 && (
         <ul>
-          {items.map(item => (
-            <li key={item.id}>
-              <Link to={`/movies/${item.id}`} state={{ from: location }}>
-                {item.title}
+          {items.map(({ id, title }) => (
+            <li key={id}>
+              <Link to={`/movies/${id}`} state={{ from: location }}>
+                {title}
               </Link>
             </li>
           ))}
