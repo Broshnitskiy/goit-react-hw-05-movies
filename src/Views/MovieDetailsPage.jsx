@@ -38,7 +38,13 @@ export const MovieDetailsPage = () => {
     <>
       {error && <p>Whoops, something went wrong: {error.message}</p>}
       {loading && <Loader />}
-      <Link to={location?.state?.from ?? '/'}>
+      <Link
+        to={location?.state?.from ?? '/'}
+        style={{
+          marginBottom: '16px ',
+          display: 'block',
+        }}
+      >
         <IoArrowUndoOutline /> Go back
       </Link>
 
@@ -48,13 +54,18 @@ export const MovieDetailsPage = () => {
         <p>Aditional information</p>
         <ul>
           <li>
-            <NavLink to={'cast'}>Cast</NavLink>
+            <NavLink to={'cast'} state={{ from: location?.state?.from }}>
+              Cast
+            </NavLink>
           </li>
           <li>
-            <NavLink to={'reviews'}>Reviews</NavLink>
+            <NavLink to={'reviews'} state={{ from: location?.state?.from }}>
+              Reviews
+            </NavLink>
           </li>
         </ul>
       </div>
+
       <Outlet />
     </>
   );

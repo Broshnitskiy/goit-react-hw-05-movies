@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getFilmCast } from '../../helpers/fetch-beckend';
 import { Loader } from 'components/Loader/Loader';
 import baseImg from '../../images/no-poster1.png';
+import { List } from './Cast.styled';
 
 export const Cast = () => {
   const { movieId } = useParams();
@@ -30,23 +31,27 @@ export const Cast = () => {
     <>
       {error && <p>Whoops, something went wrong: {error.message}</p>}
       {loading && <Loader />}
-      <ul>
-        {filmCast.map(({ id, name, character, profile_path }) => (
-          <li key={id}>
-            {profile_path ? (
-              <img
-                width={200}
-                src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-                alt={name}
-              />
-            ) : (
-              <img width={200} src={`${baseImg}`} alt="no_image" />
-            )}
-            <p>{name}</p>
-            <p>Character: {character}</p>
-          </li>
-        ))}
-      </ul>
+      {filmCast.length > 0 ? (
+        <List>
+          {filmCast.map(({ id, name, character, profile_path }) => (
+            <li key={id}>
+              {profile_path ? (
+                <img
+                  width={200}
+                  src={`https://image.tmdb.org/t/p/w500${profile_path}`}
+                  alt={name}
+                />
+              ) : (
+                <img width={200} src={`${baseImg}`} alt="no_image" />
+              )}
+              <p>{name}</p>
+              <p>Character: {character}</p>
+            </li>
+          ))}
+        </List>
+      ) : (
+        <p>We don't have any cast for this movie.</p>
+      )}
     </>
   );
 };

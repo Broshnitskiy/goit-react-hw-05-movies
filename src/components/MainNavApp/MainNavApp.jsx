@@ -1,22 +1,25 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
+import { List, Link } from './MainNavApp.styled';
 
 export const MainNavApp = () => {
   return (
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/movies">Movies</NavLink>
-          </li>
-        </ul>
-      </nav>
+    <>
+      <header>
+        <nav>
+          <List>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/movies">Movies</Link>
+            </li>
+          </List>
+        </nav>
+      </header>
       <Suspense fallback="">
         <Outlet />
       </Suspense>
-    </header>
+    </>
   );
 };
